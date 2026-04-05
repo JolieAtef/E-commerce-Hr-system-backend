@@ -1,19 +1,3 @@
-// {
-//     user: ObjectId (ref: User),
-//     items: [{
-//     product: ObjectId,
-//     quantity: Number,
-//     price: Number // Snapshot price at purchase
-//     }],
-//     totalAmount: Number,
-//     paymentMethod: Enum ['cod', 'card'],
-//     paymentStatus: Enum ['pending', 'paid', 'failed'],
-//     orderStatus: Enum ['pending', 'processing', 'shipped', 'delivered',
-//     'cancelled'],
-//     shippingAddress: Object,
-//     createdAt: Date
-//     }
-
 import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({

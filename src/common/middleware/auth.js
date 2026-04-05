@@ -9,7 +9,7 @@ export const generateToken = (user)=>{
          case "user":
             signature="s_u"
             break;
-         case "stuff":
+         case "staff":
             signature="s_s"
             break;
          case "admin":
@@ -34,7 +34,7 @@ export const authenticate = (req , res , next)=>{
          case "user":
             signature="s_u";
             break;
-         case "stuff":
+         case "staff":
             signature="s_s"
             break;
          case "admin":

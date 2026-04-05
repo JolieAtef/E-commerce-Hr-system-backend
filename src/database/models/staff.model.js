@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose"
 
-const stuffSchema = mongoose.Schema({
+const staffSchema = mongoose.Schema({
     user:{
         type:mongoose.Types.ObjectId, 
         ref:"users"
@@ -11,7 +11,8 @@ const stuffSchema = mongoose.Schema({
         required:true
     },
     joinDate:{
-        type:Date
+        type:Date,
+        required:true
     },
     department:{
         type:String,
@@ -19,35 +20,35 @@ const stuffSchema = mongoose.Schema({
     },
     isActive:{
         type:Boolean,
-        required:true
+        required:true,
+        default:true
     },
     monthlyReports:[{
         month:{
             type:String,    //2024-4
-            required:true
         },
         totalDaysWorked:{
             type:Number,
-            required:true
+           
         },
         totalDeductions:{
             type:Number,
-            required:true
+            default: 0
         },
         finalSalary:{
             type:Number,
-            required:true
+            
         },
         isPaid:{
             type:Boolean,
-            required:true 
+           
         },
         paidAt:{
             type:Boolean,
-            required:true 
+            
         }      
     }]
 
 })
 
-export const stuffModel = mongoose.model("stuff", stuffSchema)
+export const staffModel = mongoose.model("staff", staffSchema)
