@@ -11,11 +11,15 @@ import { orderRouter , adminOrderRouter } from "./modules/order/order.controller
 import staffRouter from "./modules/staff/staff.controller.js"
 import attendanceRouter from "./modules/attendance/attendance.controller.js"
 import deductionRouter from "./modules/deduction/deduction.controller.js"
+import salaryRouter from "./modules/salary/salary.controller.js"
+import { initSocket } from "./modules/notificationSocket/notification.socket.js"
+import cors from "cors"
 
 export const bootstrap = ()=>{
     const app = express()
     app.use(express.json())
     databaseConnection()
+
     app.use("/api/v1/auth", authRouter)
     app.use("/api/v1/users", userRouter)
     app.use("/api/v1/categories",categoryRouter)
@@ -28,8 +32,16 @@ export const bootstrap = ()=>{
     app.use("/api/v1/admin/staff", staffRouter)
     app.use("/api/v1/staff", attendanceRouter)
     app.use("/api/v1/admin/staff/:id/deductions",deductionRouter )
-
+    app.use("/api/v1/admin/staff/:id/salary/:month", salaryRouter)
     
+    initSocket()
+    // app.use(cors({
+    //         origin: "*", //base url frontend
+    //         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    //         credentials: true
+    //       }));
+    
+
     app.listen(env.port, ()=>{
         console.log("server running on port 3000")
     })

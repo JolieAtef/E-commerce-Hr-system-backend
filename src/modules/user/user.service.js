@@ -4,9 +4,12 @@ import { userModel } from "../../database/models/user.model.js"
 
 
 export const getProfile = async(req ,res)=>{
-
     let user = await userModel.findById(req.user.id)
-    res.json({message:"User Profile", user})
+    if(user){
+        res.json({message:"User Profile", user})
+    }else{
+        res.json({message:"user not found"})
+    }
 }
 
 

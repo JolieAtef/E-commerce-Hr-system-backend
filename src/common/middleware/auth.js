@@ -22,13 +22,13 @@ export const generateToken = (user)=>{
     let accessToken = jwt.sign({id :user._id} , signature , {expiresIn :"24h"})
     let refreshToken = jwt.sign({id :user._id} , signature , {expiresIn :"1y"})
 
-    return{accessToken , refreshToken}
+    return {accessToken , refreshToken}
 }
 
  
 export const authenticate = (req , res , next)=>{
-      let {Authorization} = req.headers
-      let {bearer, token} = Authorization.split(" ")
+      let {authorization} = req.headers
+      let {bearer, token} = authorization.split(" ")
       let signature=""
       switch(bearer){
          case "user":

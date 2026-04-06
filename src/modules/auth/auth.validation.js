@@ -9,7 +9,8 @@ export const signupSchema = joi.object({
     password:joi.string().required().min(8).pattern(new RegExp("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")).custom(detectInjection),
     confirmPassword:joi.string().required().min(8).pattern(new RegExp("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")).valid(joi.ref("password")).custom(detectInjection),
     phone:joi.number().min(11).required().custom(detectInjection),
-    address:joi.string().required().min(10).custom(detectInjection)
+    address:joi.string().required().min(10).custom(detectInjection),
+    role:joi.string().optional().valid("admin", "user", "staff")
 })
 
 

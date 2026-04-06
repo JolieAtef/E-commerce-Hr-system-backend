@@ -41,11 +41,12 @@ const staffSchema = mongoose.Schema({
         },
         isPaid:{
             type:Boolean,
+            default:false
            
         },
         paidAt:{
-            type:Boolean,
-            
+            type:Date,
+  
         }      
     }]
 

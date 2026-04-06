@@ -8,7 +8,7 @@ let router = express.Router()
 
 router.post("/signup",validation(signupSchema), signup)
 router.post("/login" ,validation(loginSchema), login)
-router.post("/verify-email/:token",verify)
+router.get("/verify-email/:token",verify)
 router.post("/resend-verification",validation(emailSchema),resendVerification)
 router.post("/forgot-password",validation(emailSchema),forgetPassword)
 router.post("/reset-password/:token",validation(resetPasswordSchema),resetPassword)

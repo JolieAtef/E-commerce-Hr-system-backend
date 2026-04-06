@@ -119,13 +119,34 @@ export const updateStokeQuantity =async(req , res)=>{
 
 
 export const getActiveProducts = async(req ,res)=>{
-    ///
-    // let {page , limit , minPrice , maxPrice , sort}= req.query
-    let products = await productModel.find({isDeleted:false})
+    let {page=1 , limit=5 , minPrice , maxPrice , sort}= req.query
+    let query ={}
+    if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice){
+            query.price.$gte = Number(minPrice);
+        } 
+        if (maxPrice){
+            query.price.$lte = Number(maxPrice);
+        } 
+    }
+ 
+    const skip = (Number(page)-1)*limit
+    
+    let sortPrice
+    if (sort === 'price_asc'){
+        sortPrice =1
+     } 
+    if (sort === 'price_desc') {
+        sortPrice=-1
+    }
+
+    let products = await productModel.find({...query , isDeleted:false}).sort({price:sortPrice}).skip(skip).limit(Number(limit))
+
     if(products.length==0){
         res.json({message:"no products found"})
     }else{  
-        res.json({message:"products data", products})
+       res.json({message:"products data", products})
     }
 }
 
@@ -148,14 +169,33 @@ export const getProductDetails = async (req ,res )=>{
 
 export const getCategoryProducts = async(req , res)=>{
     let {categoryId}= req.params
-    ///
-    // let {page , limit , minPrice , maxPrice , sort}= req.query
+    let {page=1 , limit=5 , minPrice , maxPrice , sort}= req.query
+    let query ={}
+    if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice){
+            query.price.$gte = Number(minPrice);
+        } 
+        if (maxPrice){
+            query.price.$lte = Number(maxPrice);
+        } 
+    }
+ 
+    const skip = (Number(page)-1)*limit
+    
+    let sortPrice
+    if (sort === 'price_asc'){
+        sortPrice =1
+     } 
+    if (sort === 'price_desc') {
+        sortPrice=-1
+    }
 
     let category = await categoryModel.findById(categoryId)
     if(!category){
        return  res.json({message:"category not found"})
     }
-    let products = await productModel.find({category:categoryId , isDeleted:false})
+    let products = await productModel.find({category:categoryId , ...query , isDeleted:false}).sort({price:sortPrice}).skip(skip).limit(Number(limit))
     if(products.length==0){
         res.json({message:"no products found"})
     }else{
@@ -165,13 +205,33 @@ export const getCategoryProducts = async(req , res)=>{
 
 export const getSubcategoryProducts=async (req ,res)=>{
     let {subcategoryId} = req.params
-    ///
-    // let {page , limit , minPrice , maxPrice , sort}= req.query
+    let {page=1 , limit=5 , minPrice , maxPrice , sort}= req.query
+    let query ={}
+    if (minPrice || maxPrice) {
+        query.price = {};
+        if (minPrice){
+            query.price.$gte = Number(minPrice);
+        } 
+        if (maxPrice){
+            query.price.$lte = Number(maxPrice);
+        } 
+    }
+ 
+    const skip = (Number(page)-1)*limit
+    
+    let sortPrice
+    if (sort === 'price_asc'){
+        sortPrice =1
+     } 
+    if (sort === 'price_desc') {
+        sortPrice=-1
+    }
+
     let subcategory = await subCategoryModel.findById(subcategoryId)
     if(!subcategory){
         return res.json({message:"subcategory not found"})
     }
-    let products = await productModel.find({subcategory:subcategoryId , isDeleted:false})
+    let products = await productModel.find({subcategory:subcategoryId , ...query , isDeleted:false}).sort({price:sortPrice}).skip(skip).limit(Number(limit))
     if(products.length==0){
         res.json({message:"no products found"})
     }else{

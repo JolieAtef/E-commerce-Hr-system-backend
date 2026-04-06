@@ -63,15 +63,14 @@ export const checkOut = async (req , res)=>{
         return res.json({message:"You haven't checked in yet"})
     }
 
-    const today9AM = new Date();
-    today9AM.setHours(9, 0, 0, 0);
-    const hours = Math.floor((now - today9AM) / (1000 * 60 * 60));
+    const checkIn = attendanceDay.checkIn
+    const hours = Math.floor((now - checkIn) / (1000 * 60 * 60));
     
     let monthlyReport = staffMember.monthlyReports.find((report)=>report.month==`${year}-${month}`)
     if(!monthlyReport){
         let totalDeductions
         if(hours < 8){
-            let deductionAmount = staffMember.dailySalary*((8-hours)/8)
+            let deductionAmount = staffMember.dailySalary*0.1
             let addedDeduction = await deductionModel.insertMany({staff:req.user.id , month:`${year}-${month}`, amount:deductionAmount , reason:"being late" , date:today})
             totalDeductions = 1
          }
