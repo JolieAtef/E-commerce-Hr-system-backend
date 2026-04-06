@@ -28,7 +28,7 @@ export const generateToken = (user)=>{
  
 export const authenticate = (req , res , next)=>{
       let {authorization} = req.headers
-      let {bearer, token} = authorization.split(" ")
+      let [bearer, token] = authorization.split(" ")
       let signature=""
       switch(bearer){
          case "user":

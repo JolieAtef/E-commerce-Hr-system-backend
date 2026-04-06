@@ -113,13 +113,13 @@ export const resetPassword =async(req , res)=>{
 
 export const getAccessToken= async(req , res)=>{
     let {authorization} = req.headers
-    let {bearer, token} = authorization.split(" ")
+    let [bearer, token] = authorization.split(" ")
     let signature=""
     switch(bearer){
        case "user":
           signature="s_u";
           break;
-       case "stuff":
+       case "staff":
           signature="s_s"
           break;
        case "admin":
@@ -128,7 +128,6 @@ export const getAccessToken= async(req , res)=>{
        default:
           break;
     }
-    
     let decode = jwt.verify(token, signature)
     let accessToken = jwt.sign({id : decode.id}, signature,{expiresIn:"24h"})
 
