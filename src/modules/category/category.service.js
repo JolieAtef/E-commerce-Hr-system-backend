@@ -4,6 +4,7 @@ import { categoryModel } from "../../database/models/category.model.js"
 
 
 export const createCategory = async(req , res)=>{
+    console.log(req.body)
     let {name} = req.body
     let image =""
     if(req.file){
@@ -13,7 +14,7 @@ export const createCategory = async(req , res)=>{
             folder: "e-commerce_categories",  
         })
     }
-    let addedCategory = await categoryModel.insertMany({name , image})
+    let addedCategory = await categoryModel.insertMany({name , image: image.url})
     if(addedCategory){
         res.json({message:"category added successfully",addedCategory})
     }else{

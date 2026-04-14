@@ -9,9 +9,9 @@ import { upload } from "../../common/middleware/multer.js"
 
 let router = express.Router()
 
-router.post("/profile", authenticate, authorize("user"),filterDeletedUsers, getProfile)
+router.get("/profile", authenticate, authorize("user"),filterDeletedUsers, getProfile)
 router.put("/profile", authenticate, authorize("user"),filterDeletedUsers, validation(updateProfileSchema),upload.single("avatar"), updateProfile)
 router.delete("/profile" ,authenticate , authorize("user"),filterDeletedUsers,softDeletedProfile)
-router.post("/upload-avatar", authenticate , authorize("user"), filterDeletedUsers, validation(avatarSchema),upload.single("avatar"),uploadAvatar)
+router.post("/upload-avatar", authenticate , authorize("user"), filterDeletedUsers, validation(avatarSchema), upload.single("avatar"),uploadAvatar)
 
 export default router

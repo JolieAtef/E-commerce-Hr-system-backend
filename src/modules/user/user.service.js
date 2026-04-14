@@ -16,14 +16,14 @@ export const getProfile = async(req ,res)=>{
 export const updateProfile = async (req ,res)=>{
     let {name , email , phone , address } = req.body
     let avatar =""
-    if(req.file)(
+    if(req.file){
         avatar= await imageKit.upload({
             file: req.file.buffer,          
             fileName:`${Date.now()}_${req.file.originalname}`,
             folder: "e-commerce_users",              
         })
-    )
-    let updatedUser = await userModel.findByIdAndUpdate(req.user.id , {name , email , phone , address , avatar }, {new:true})
+    }
+    let updatedUser = await userModel.findByIdAndUpdate(req.user.id , {name , email , phone , address , avatar:avatar.url }, {new:true})
     if(updatedUser){
         res.json({message:"user updated successfully", updatedUser})
     }else{
@@ -50,14 +50,16 @@ export const softDeletedProfile = async (req , res)=>{
 
 export const uploadAvatar = async(req , res)=>{
     let avatar=""
-    if(req.file)(
+    if(req.file){
+        console.log(req.file.originalname)
         avatar= await imageKit.upload({
             file: req.file.buffer,          
             fileName:`${Date.now()}_${req.file.originalname}`,
             folder: "e-commerce_users",              
         })
-    )
-    let updatedUser = await userModel.findByIdAndUpdate(req.user.id , {avatar}, {new:true})
+
+    }
+    let updatedUser = await userModel.findByIdAndUpdate(req.user.id , {avatar:avatar.url}, {new:true})
     if(updatedUser){
         res.json({message:"profile image added successfully", updatedUser})
     }else{
